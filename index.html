@@ -1,1 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- sets width to device width, and initial zoom level -->
+    <title>idle clicker</title> <!-- title of page on tab -->
+		<link rel="icon" type="image/png" sizes="32x32" href="Images/favicon.png"> <!-- favicon -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+* {
+  box-sizing: border-box; /* includes padding + border in element's total width + height */
+  font-family: 'Press Start 2P', cursive;
+  overflow:hidden;
+}
+
+body, html {
+  background-color: hotpink;
+  color:white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:100%;
+  height:100%;
+}
+
+::selection {
+  color: white;
+  background: transparent;
+}
+
+/* div with all the information */
+p, #info {
+  margin: 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#counter {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+/* contains all the items that can be bought */
+.itemContainer {
+  display: flex; /* using flexbox to align items */
+  flex-wrap: wrap; /* to force items on multiple lines */
+}
+
+/* each individual item */
+.item {
+  margin: 10px; /* some spacing around */
+  flex: 100%; /* to put 4 items on each line (100/4 = 25) */
+  cursor:pointer;
+}
+
+/* contains information about each item */
+.containerText {
+	font-size: 12px;
+  text-align: center;
+}
+    </style>
+  </head>
+  
+	<body>
+
+		<center> <!-- makes all the content centered -->
+
+			<div id="info clickButton" onclick="increment();confetti();"> <!-- contains the info (view below), in <span> tags because they constantly evolve -->
+				<p id="counter"><span id="showApples" class="number">0</span></p> <!-- shows number of apples -->
+
+				<p>per second = <span id="showApplesPerSecond" class="number">0</span></p> <!-- shows apples per second -->
+
+				<p>per click = <span id="showApplesPerClick" class="number">1</span></p> <!-- shows apples per click -->
+
+				<p id="gameOver"></p> <!-- for text to appear when you win -->
+			</div>
+			
+			<!-- Items that can be bought -->
+			<div class="itemContainer"> <!-- contains 4 items that you can buy -->
+				<div class="item"> <!-- an item -->
+					<div class="containerText" onclick="buyIPhone();confetti();"> <!-- contains stats about item -->
+          <p>+1 / second</p>
+          <p>cost: <span id="iPhoneCost">10</span></p>
+
+						<p>x: <span id="iPhoneNum">0</span></p>
+
+
+					</div>
+				</div>
+
+				<div class="item"> <!-- an item -->
+
+					<div class="containerText" onclick="buyIPad();confetti();"> <!-- contains stats about item -->
+            <p>+1 / click</p>
+
+						<p>cost: <span id="iPadCost">10</span></p>
+            <p>y:  <span id="iPadNum">0</span></p>
+
+					</div>
+				</div>
+
+		
+				
+			
+			</div>
+		</center>
+    <script>
+      // all the variables
+var apples = 0;
+
+var applesPerSecond = 0;
+
+var applesPerClick = 1;
+
+// costs of items
+var iPhoneCost = 10;
+
+var iPadCost = 10;
+
+var airPodsCost = 500;
+
+// how many items you have
+var iPhones = 0;
+
+var iPads = 0;
+
+var airPods = 0;
+
+
+
+// function that gets called when you click the apple logo
+function increment() {
+	apples += applesPerClick; // adds the number of apples per click to your total apples
+	document.getElementById("showApples").innerText = apples; // uses DOM to change the number of apples in the HTMl
+
+	if (apples >= 7800000000) // if it's higher than world population
+	{
+		document.getElementById("gameOver").innerText = "You won the game! Apple dominates the Earth!"
+	}
+}
+
+// function that happens every second
+setInterval(function() {
+	apples += applesPerSecond; // adds the number of apples per second to your total apples
+	document.getElementById("showApples").innerText = apples; // uses DOM to change the number of apples in the HTML
+}, 1000) // every second (1000 milliseconds)
+
+
+// different functions for each item
+function buyIPhone() {
+
+	if (apples >= iPhoneCost) // checks if you have enough apples
+	{
+		
+		apples -= iPhoneCost; // subtracts cost apples 
+
+		document.getElementById("showApples").innerText = apples;
+
+		iPhones++; // increments number of that item 
+
+		document.getElementById("iPhoneNum").innerText = iPhones;
+	
+
+		iPhoneCost *=2; // doubles price of that item 
+
+		document.getElementById("iPhoneCost").innerText = iPhoneCost;
+
+
+		applesPerSecond += 1; // increases number of apples per second
+
+		document.getElementById("showApplesPerSecond").innerText = applesPerSecond;	
+	
+	}	else { // if there enough apples
+		alert("You don't have enough Apples!") 
+	}
+}
+
+// different functions for each item
+function buyIPad() {
+
+	if (apples >= iPadCost) { // checks if you have enough apples
+		
+		apples -= iPadCost; // subtracts cost apples 
+
+		document.getElementById("showApples").innerText = apples;
+
+		iPads++; // increments number of that item // increments number of that item // increments number of that item // increments number of that item
+
+		document.getElementById("iPadNum").innerText = iPads;
+	
+
+		iPadCost *=2; // doubles price of that item
+
+		document.getElementById("iPadCost").innerText = iPadCost;
+
+
+		applesPerClick += 1; // increases number of apples per click
+
+		document.getElementById("showApplesPerClick").innerText = applesPerClick;
+	
+	} else { // if there enough apples
+		alert("You don't have enough Apples!")
+	}
+}
+    </script>
+  </body>
+</html>
